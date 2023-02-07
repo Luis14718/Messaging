@@ -1,0 +1,76 @@
+.messaging form {
+  width: 50%;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+.messaging form label, .messaging form input[type="submit"] {
+  display: block;
+  margin-bottom: 10px;
+}
+.messaging form label {
+  font-weight: bold;
+}
+.messaging form input[type="text"], .messaging form textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+.messaging form input[type="submit"] {
+  width: 100%;
+  padding: 10px;
+  background-color: rgb(0, 17, 255);
+  color: white;
+  cursor: pointer;
+  border-radius: 35px;
+  border: 0px; 
+  outline: 0;
+  font-size: 25px;
+  font-weight: bolder;
+}
+.mx-auto{
+  margin-left: auto;
+  margin-right: auto;
+}
+.text-center
+{
+  text-align: center;
+}
+.messaging table {
+  width: 90%;
+  border: 1px solid;
+  border-radius: 0px 0px 13px 13px;
+}
+.messaging thead {
+  background-color: lightgray;
+}
+.messaging tbody tr {
+  text-align: center;
+  height: 32px;
+}
+.messaging tbody tr::after {
+  content: "";
+  border: 1px solid #c0c0c0;
+  width: 89%;
+  position: absolute;
+  left: 7px;
+}
+.messaging tbody tr:first-child::after {
+  border: 0px solid #c0c0c0;
+}
+
+.sort {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#333"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+  background-repeat: no-repeat;
+  background-position: center right;
+  padding-right: 20px;
+  cursor: pointer;
+}
+
+.sort.ascending {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#333"><path d="M7 14l5-5 5 5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+}
+.sort-up{
+  display: none;
+}
