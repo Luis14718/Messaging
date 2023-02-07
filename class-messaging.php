@@ -1,6 +1,5 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+
 require_once MESSAGING__PLUGIN_DIR.'/library/twilio/src/Twilio/autoload.php';
 use Twilio\Rest\Client;
 
@@ -28,8 +27,8 @@ class Messaging {
         if (isset($_POST['submit'])) {
             $phone = sanitize_text_field($_POST['phone']);
             $message = sanitize_text_field($_POST['message']);
-            $accountSid = 'AC928488ac2532f50724f6e37245088ee5';
-            $authToken = '7e2bf43a2b9baacdff52f56ae6bea92b';
+            $accountSid = get_option( 'twilio_account_sid' );
+            $authToken = get_option( 'twilio_auth_token' );
         
             // Create a Twilio client
             $client = new Client($accountSid, $authToken);
@@ -42,7 +41,7 @@ class Messaging {
                     'body' => $message
                 )
             );
-         print_r($client);
+            
             $wpdb->insert(
                 $table_name,
                 array(

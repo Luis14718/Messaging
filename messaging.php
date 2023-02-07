@@ -26,6 +26,7 @@ register_activation_hook( __FILE__, 'program_test_activate' );
 function program_test_activate() {
     global $wpdb;
     $table_name = $wpdb->prefix . 'messaging';
+    $table_name2 = $wpdb->prefix . 'messaging_status';
     $charset_collate = $wpdb->get_charset_collate();
 
     $sql = "CREATE TABLE $table_name (
@@ -33,7 +34,16 @@ function program_test_activate() {
         phone VARCHAR(20) NOT NULL,
         message TEXT NOT NULL,
         timestamp DATETIME NOT NULL
-    ) $charset_collate;";
+    ) $charset_collate;
+    CREATE TABLE $table_name2 (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        id_api_message VARCHAR(20) NOT NULL,
+        id_message VARCHAR(20) NOT NULL,
+        status_message VARCHAR(20) NOT NULL,
+        message TEXT NOT NULL,
+        timestamp DATETIME NOT NULL
+    ) $charset_collate;
+    ";
 
     require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
     dbDelta( $sql );
@@ -42,10 +52,19 @@ function program_test_activate() {
 
 
 if ( is_admin() || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
-	require_once( MESSAGING__PLUGIN_DIR . 'class-messaging.php' );
-	add_action( 'init', array( 'Messaging', 'init' ) );
-    require_once( MESSAGING__PLUGIN_DIR . 'class-table-messaging.php' );
-    add_action( 'init', array('Tablemessaging' , 'init'));
+    $twilio_account_sid = get_option( 'twilio_account_sid' );
+    $twilio_auth_token = get_option( 'twilio_auth_token' );
+
+    if ( !empty( $twilio_account_sid ) && !empty( $twilio_auth_token ) ) {
+        require_once( MESSAGING__PLUGIN_DIR . 'class-messaging.php' );
+        add_action( 'init', array( 'Messaging', 'init' ) );
+        require_once( MESSAGING__PLUGIN_DIR . 'class-table-messaging.php' );
+        add_action( 'init', array('Tablemessaging' , 'init'));
+    } else {
+        require_once( MESSAGING__PLUGIN_DIR . 'class-options.php' );
+        add_action( 'init', array( 'Tokenization', 'init' ) );
+    }
+	
     
 }
 
