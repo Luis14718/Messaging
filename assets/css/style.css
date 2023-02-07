@@ -74,3 +74,15 @@
 .sort-up{
   display: none;
 }
+span.yellow{
+  color: yellow;
+}
+span.red{
+  color: red;
+}
+span.green{
+  color: green;
+}
+span.gray{
+  color: gray;
+}

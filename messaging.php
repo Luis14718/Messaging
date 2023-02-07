@@ -18,8 +18,25 @@ wp_register_style( 'style.css', plugins_url( 'assets/css/style.css', __FILE__ ),
 wp_enqueue_style( 'program-test-style', plugins_url( 'assets/css/style.css', __FILE__ ) ); 
 
 
+//including the webhook
+// Register a custom endpoint
+add_action( 'rest_api_init', 'register_twilio_callback_endpoint' );
+function register_twilio_callback_endpoint() {
+register_rest_route( 'twilio/v1', '/callback', array(
+'methods' => 'POST',
+'callback' => 'twilio_callback_handler',
+) );
+}
 
-
+// Handle the Twilio callback
+function twilio_callback_handler( $request ) {
+// Process the request data and return a response
+$response = array(
+'status' => 'success',
+'message' => 'Callback received',
+);
+return rest_ensure_response( $response );
+}
 
 register_activation_hook( __FILE__, 'program_test_activate' );
 
@@ -60,6 +77,8 @@ if ( is_admin() || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
         add_action( 'init', array( 'Messaging', 'init' ) );
         require_once( MESSAGING__PLUGIN_DIR . 'class-table-messaging.php' );
         add_action( 'init', array('Tablemessaging' , 'init'));
+        require_once( MESSAGING__PLUGIN_DIR . 'class-table-status-messaging.php' );
+        add_action( 'init', array('TableStatusmessaging' , 'init'));
     } else {
         require_once( MESSAGING__PLUGIN_DIR . 'class-options.php' );
         add_action( 'init', array( 'Tokenization', 'init' ) );

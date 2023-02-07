@@ -14,15 +14,16 @@ class Messaging {
             'Text Message', // Menu Title
             'manage_options', // Capability
             'text-message', // Menu Slug
-            array( 'Messaging', 'program_test_display_form' ), // Callback Function
-            'dashicons-admin-generic', // Icon URL
-            20 // Position
+            array( 'Messaging', 'program_test_display_form' ), 
+            'dashicons-email', 
+            20 
         );
      
     }
     public static function program_test_display_form() {
         global $wpdb;
         $table_name = $wpdb->prefix . 'messaging';
+        $table_status_name = $wpdb->prefix . 'messaging_status';
         
         if (isset($_POST['submit'])) {
             $phone = sanitize_text_field($_POST['phone']);
@@ -32,16 +33,18 @@ class Messaging {
         
             // Create a Twilio client
             $client = new Client($accountSid, $authToken);
-        
+            
             // Send the message
-            $client->messages->create(
+           $message_result =  $client->messages->create(
                 '+50363106539',
                 array(
                     'from' => '+19135132360',
-                    'body' => $message
+                    'body' => $message,
+                   // 'statusCallback' => "/wp-json/twilio/v1/callback",
                 )
             );
-            
+
+         
             $wpdb->insert(
                 $table_name,
                 array(
@@ -54,7 +57,26 @@ class Messaging {
                     '%s',
                     '%s'
                 )
-            );       
+            );
+            $message_id = $wpdb->insert_id;
+
+            $wpdb->insert(
+                $table_status_name,
+                array(
+                    'id_api_message' =>$message_result->sid,
+                    'id_message' =>  $message_id,
+                    'status_message' => $message_result->status,
+                    'message' =>$message,
+                    'timestamp' => current_time('mysql')
+                ),
+                array(
+                    '%s',
+                    '%s',
+                    '%s',
+                    '%s',
+                    '%s',
+                )
+            );     
         }
 
         self::view('form');
