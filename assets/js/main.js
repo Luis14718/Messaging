@@ -20,7 +20,6 @@ jQuery(document).ready(function($){
 
 
   const headers = document.querySelectorAll("th");
-  console.log(headers);
   headers.forEach(header => {
     header.addEventListener("click", () => {
       headers.forEach(header => {

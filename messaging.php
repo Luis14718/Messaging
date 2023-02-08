@@ -12,8 +12,6 @@ ini_set('display_errors', 1);
 define( 'MESSAGING__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
 
-
-
 wp_register_style( 'style.css', plugins_url( 'assets/css/style.css', __FILE__ ), array(), "v00" );
 wp_enqueue_style( 'program-test-style', plugins_url( 'assets/css/style.css', __FILE__ ) ); 
 
