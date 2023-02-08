@@ -39,7 +39,7 @@ function twilio_callback_handler( $request ) {
     $table_name = $wpdb->prefix . "messaging_status";
     $data = [
         "status_message" => $request->get_param("MessageStatus"),
-        "date_sent"=> current_time("mysql")
+        "date_sent"=> date("Y-m-d H:i:s")
     ];
     $where = [
         "id_api_message" => $messageSid,
