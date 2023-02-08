@@ -1,28 +1,33 @@
 <?php
 error_reporting(E_ALL);
-ini_set('display_errors', 1);
+ini_set("display_errors", 1);
 
-class TableStatusmessaging {
-
-    public static function init() {
-        add_action( 'admin_menu', array( 'TableStatusmessaging', 'add_submenu_page' ) );
+class TableStatusmessaging
+{
+    public static function init()
+    {
+        add_action("admin_menu", ["TableStatusmessaging", "add_submenu_page"]);
     }
 
-    public static function add_submenu_page() {
+    public static function add_submenu_page()
+    {
         add_submenu_page(
-            'text-message',
-            'Status',
-            'Status',
-            'manage_options',
-            'message-status',
-            array( 'TableStatusmessaging', 'display_entries' )
+            "text-message",
+            "Status",
+            "Status",
+            "manage_options",
+            "message-status",
+            ["TableStatusmessaging", "display_entries"]
         );
     }
 
-    public static function display_entries() {
+    public static function display_entries()
+    {
         global $wpdb;
 
-        $entries = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}messaging_status");
+        $entries = $wpdb->get_results(
+            "SELECT * FROM {$wpdb->prefix}messaging_status"
+        );
         ?>
         <div class="messaging">
             <div class="row">
@@ -55,28 +60,29 @@ class TableStatusmessaging {
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ( $entries as $entry ) : ?>
+                <?php foreach ($entries as $entry): ?>
                 <tr>
                     <td><?php echo $entry->id_message; ?></td>
-                    <td><?php echo $entry->status_message; 
-                     switch ($entry->status_message) {
-                        case 'queued':
+                    <td><?php
+                    echo $entry->status_message;
+                    switch ($entry->status_message) {
+                        case "queued":
                             echo '<span class="yellow"> ●</span>';
                             break;
-                        case 'failed':
+                        case "failed":
                             echo '<span class="red"> ●</span>';
                             break;
-                        case 'sent':
+                        case "sent":
                             echo '<span class="green"> ●</span>';
                             break;
-                        case 'delivered':
+                        case "delivered":
                             echo '<span class="green"> ●</span>';
                             break;
-                        case 'undelivered':
+                        case "undelivered":
                             echo '<span class="gray"> ●</span>';
                             break;
                     }
-                     ?> </td>
+                    ?> </td>
                     <td><?php echo $entry->id_api_message; ?></td>
                     <td><?php echo $entry->message; ?></td>
                     <td><?php echo $entry->date_sent; ?></td>

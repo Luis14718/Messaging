@@ -1,25 +1,28 @@
 <?php
 error_reporting(E_ALL);
-ini_set('display_errors', 1);
+ini_set("display_errors", 1);
 
-class Tablemessaging {
-
-    public static function init() {
-        add_action( 'admin_menu', array( 'Tablemessaging', 'add_submenu_page' ) );
+class Tablemessaging
+{
+    public static function init()
+    {
+        add_action("admin_menu", ["Tablemessaging", "add_submenu_page"]);
     }
 
-    public static function add_submenu_page() {
+    public static function add_submenu_page()
+    {
         add_submenu_page(
-            'text-message',
-            'Entries',
-            'Entries',
-            'manage_options',
-            'program-test-entries',
-            array( 'Tablemessaging', 'display_entries' )
+            "text-message",
+            "Entries",
+            "Entries",
+            "manage_options",
+            "program-test-entries",
+            ["Tablemessaging", "display_entries"]
         );
     }
 
-    public static function display_entries() {
+    public static function display_entries()
+    {
         global $wpdb;
 
         $entries = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}messaging");
@@ -51,7 +54,7 @@ class Tablemessaging {
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ( $entries as $entry ) : ?>
+                <?php foreach ($entries as $entry): ?>
                 <tr>
                     <td><?php echo $entry->id; ?></td>
                     <td><?php echo $entry->phone; ?></td>

@@ -1,7 +1,6 @@
-<?php ?>
-
-
-
+<?php 
+//Form to send message 
+?>
 <div class="container messaging">
   <div class="row">
     <div class="col-12 align-items-center text-center">

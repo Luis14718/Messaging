@@ -1,4 +1,6 @@
-<?php ?>
+<?php
+//form to get token 
+?>
 
 <div class="container messaging">
   <div class="row">
