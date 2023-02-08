@@ -6,6 +6,7 @@ class TableStatusmessaging
 {
     public static function init()
     {
+        ///getting second submenu 
         add_action("admin_menu", ["TableStatusmessaging", "add_submenu_page"]);
     }
 
@@ -65,6 +66,7 @@ class TableStatusmessaging
                     <td><?php echo $entry->id_message; ?></td>
                     <td><?php
                     echo $entry->status_message;
+                    ///switching between status 
                     switch ($entry->status_message) {
                         case "queued":
                             echo '<span class="yellow"> ●</span>';

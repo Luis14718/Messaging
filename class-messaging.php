@@ -9,6 +9,7 @@ class Messaging
     {
         add_action("admin_menu", ["Messaging", "program_test_function"]);
     }
+    //adding the main page with icon 
     public static function program_test_function()
     {
         add_menu_page(
@@ -33,10 +34,10 @@ class Messaging
             $accountSid = get_option("twilio_account_sid");
             $authToken = get_option("twilio_auth_token");
 
-            // Create a Twilio client
+            // Creating a Twilio client
             $client = new Client($accountSid, $authToken);
 
-            // checking if the site is local or server
+            // checking if the site is local or server to be able to receive data with endpoint 
             if (
                 strpos(get_site_url(), "localhost") !== false ||
                 strpos(get_site_url(), "127.0.0.1") !== false
@@ -67,7 +68,7 @@ class Messaging
                 ["%s", "%s", "%s"]
             );
             $message_id = $wpdb->insert_id;
-
+            // inserting data to the database
             $wpdb->insert(
                 $table_status_name,
                 [
@@ -84,7 +85,7 @@ class Messaging
 
         self::view("form");
     }
-
+    //retrieving the views 
     public static function view($name)
     {
         $file = MESSAGING__PLUGIN_DIR . "views/" . $name . ".php";

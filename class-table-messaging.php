@@ -6,6 +6,7 @@ class Tablemessaging
 {
     public static function init()
     {
+        /// getting first submenu 
         add_action("admin_menu", ["Tablemessaging", "add_submenu_page"]);
     }
 

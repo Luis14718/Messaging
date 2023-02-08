@@ -18,6 +18,7 @@ class Tokenization
             20 // Position
         );
     }
+    //saving account credentials in safe place 
     public static function token_display_form()
     {
         if (isset($_POST["submit"])) {
