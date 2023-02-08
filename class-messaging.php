@@ -34,16 +34,30 @@ class Messaging {
             // Create a Twilio client
             $client = new Client($accountSid, $authToken);
             
-            // Send the message
-           $message_result =  $client->messages->create(
-                '+50363106539',
-                array(
-                    'from' => '+19135132360',
-                    'body' => $message,
-                   // 'statusCallback' => "/wp-json/twilio/v1/callback",
-                )
-            );
 
+            // checking if the site is local or server 
+            if ( strpos( get_site_url(), 'localhost' ) !== false || strpos( get_site_url(), '127.0.0.1' ) !== false ) {
+                 // Send the message
+               $message_result =  $client->messages->create(
+                     $phone,
+                      array(
+                        'from' => '+19135132360',
+                         'body' => $message,
+               // 'statusCallback' => "/wp-json/twilio/v1/callback",
+                     )
+              );
+              } else {
+                 // Send the message
+           $message_result =  $client->messages->create(
+            $phone,
+            array(
+                'from' => '+19135132360',
+                'body' => $message,
+                'statusCallback' => get_site_url() . "/wp-json/twilio/v1/callback",
+            )
+        );
+              }
+           
          
             $wpdb->insert(
                 $table_name,
@@ -67,6 +81,7 @@ class Messaging {
                     'id_message' =>  $message_id,
                     'status_message' => $message_result->status,
                     'message' =>$message,
+                    'date_sent'=>$message_result->dateSent,
                     'timestamp' => current_time('mysql')
                 ),
                 array(

@@ -48,6 +48,10 @@ class TableStatusmessaging {
                     <span class="sort-up">&#x25B2;</span>
                      <span class="sort-down">&#x25BC;</span>
                     </th>
+                    <th>Date Sent
+                    <span class="sort-up">&#x25B2;</span>
+                     <span class="sort-down">&#x25BC;</span>
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -75,6 +79,7 @@ class TableStatusmessaging {
                      ?> </td>
                     <td><?php echo $entry->id_api_message; ?></td>
                     <td><?php echo $entry->message; ?></td>
+                    <td><?php echo $entry->date_sent; ?></td>
                 </tr>
                 <?php endforeach; ?>
             </tbody>

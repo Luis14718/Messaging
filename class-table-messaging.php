@@ -44,7 +44,7 @@ class Tablemessaging {
                     <span class="sort-up">&#x25B2;</span>
                      <span class="sort-down">&#x25BC;</span>
                     </th>
-                    <th>Submitted
+                    <th> Date Created 
                     <span class="sort-up">&#x25B2;</span>
                      <span class="sort-down">&#x25BC;</span>
                     </th>

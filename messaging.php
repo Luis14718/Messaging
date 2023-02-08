@@ -28,7 +28,23 @@ register_rest_route( 'twilio/v1', '/callback', array(
 
 // Handle the Twilio callback
 function twilio_callback_handler( $request ) {
-// Process the request data and return a response
+    $id = $request->get_param( 'SmsSid' );
+    $status = $request->get_param( 'MessageStatus' );
+    $date = $request->get_param( 'date_sent' );
+    
+    global $wpdb;
+    $table_name = $wpdb->prefix . "wp_messaging_status";
+    $data = array(
+    'status_message' => $status,
+    'date_sent' => $date,
+    // Add more columns as needed
+);
+$where = array(
+    'id_api_message' => $id 
+);
+$wpdb->update( $table_name, $data, $where );
+
+
 $response = array(
 'status' => 'success',
 'message' => 'Callback received',
@@ -56,6 +72,7 @@ function program_test_activate() {
         id_message VARCHAR(20) NOT NULL,
         status_message VARCHAR(20) NOT NULL,
         message TEXT NOT NULL,
+        date_sent VARCHAR(150) NULL,
         timestamp DATETIME NOT NULL
     ) $charset_collate;
     ";
